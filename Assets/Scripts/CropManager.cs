@@ -18,10 +18,13 @@ public class CropManager : MonoBehaviour
 	public float FlowerDuration = 4;
 	public float RipeDuration = 4;
 
-	public float minimalGenerationInterval = 1;
+	public float minimalGenerationInterval = 0.5f;
+	public float maximalGenerationInterval = 1.5f;
 
 	private List<Crop> crops = new List<Crop>();
 	private float timeSinceLastGeneration = 0;
+
+	private float nextGenerationRandom = 0;
 
 	void Awake()
 	{
@@ -33,6 +36,7 @@ public class CropManager : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
+		nextGenerationRandom = Random.value;
 	}
 
 	// Start is called before the first frame update
@@ -45,7 +49,9 @@ public class CropManager : MonoBehaviour
 	void Update()
 	{
 		timeSinceLastGeneration += Time.deltaTime;
-		if (timeSinceLastGeneration > minimalGenerationInterval)
+		float generationPossibility = Mathf.InverseLerp(minimalGenerationInterval, maximalGenerationInterval, timeSinceLastGeneration);
+		Debug.Log(generationPossibility);
+		if (generationPossibility > nextGenerationRandom)
 		{
 			TryGenerateCrop();
 		}
@@ -63,6 +69,7 @@ public class CropManager : MonoBehaviour
 	void TryGenerateCrop()
 	{
 		timeSinceLastGeneration = 0;
+		nextGenerationRandom = Random.value;
 		float x = Random.Range(-4f, 4f);
 		float y = Random.Range(-4f, 4f);
 		GameObject cropGameObject = Instantiate(cropPrefab, new Vector3(x, y, 0), Quaternion.identity, ground.transform);

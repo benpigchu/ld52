@@ -649,10 +649,10 @@ MonoBehaviour:
   ground: {fileID: 1031255665}
   cropPrefab: {fileID: 6597953795929502611, guid: c38e2dbb2a7dac0459f0cafdf3687d5a, type: 3}
   SeedColor: {r: 0.12434341, g: 0.3584906, b: 0, a: 1}
-  GrowingColor: {r: 0.19122767, g: 1, b: 0, a: 0}
-  FlowerColor: {r: 0.7362523, g: 1, b: 0, a: 0}
-  RipeColor: {r: 1, g: 0.63872534, b: 0, a: 0}
-  DeadColor: {r: 1, g: 0.85728097, b: 0.7216981, a: 0}
+  GrowingColor: {r: 0.19122767, g: 1, b: 0, a: 1}
+  FlowerColor: {r: 0.7362523, g: 1, b: 0, a: 1}
+  RipeColor: {r: 1, g: 0.63872534, b: 0, a: 1}
+  DeadColor: {r: 1, g: 0.85728097, b: 0.7216981, a: 1}
   SeedDuration: 2
   GrowingDuration: 4
   FlowerDuration: 4
@@ -1102,7 +1102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc3384254981fe49859ea3c50ac4ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 3
   rotationRadius: 1
 --- !u!1 &1917561412
 GameObject:
