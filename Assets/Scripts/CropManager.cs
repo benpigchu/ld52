@@ -21,6 +21,9 @@ public class CropManager : MonoBehaviour
 	public float minimalGenerationInterval = 0.5f;
 	public float maximalGenerationInterval = 1.5f;
 
+	public float minimalGrowSpeed = 0.5f;
+	public float maximalGrowSpeed = 1.5f;
+
 	private List<Crop> crops = new List<Crop>();
 	private float timeSinceLastGeneration = 0;
 
@@ -50,7 +53,6 @@ public class CropManager : MonoBehaviour
 	{
 		timeSinceLastGeneration += Time.deltaTime;
 		float generationPossibility = Mathf.InverseLerp(minimalGenerationInterval, maximalGenerationInterval, timeSinceLastGeneration);
-		Debug.Log(generationPossibility);
 		if (generationPossibility > nextGenerationRandom)
 		{
 			TryGenerateCrop();
@@ -75,39 +77,39 @@ public class CropManager : MonoBehaviour
 		GameObject cropGameObject = Instantiate(cropPrefab, new Vector3(x, y, 0), Quaternion.identity, ground.transform);
 		Crop crop = cropGameObject.GetComponent<Crop>();
 		crops.Add(crop);
-		SetCropPhase(crop, CropPhase.Seed);
+		SetCropPhase(crop, CropPhase.Seed, true);
 	}
 
 	void UpdateCrops()
 	{
 		foreach (var crop in crops)
 		{
-			crop.timeSincePhaseChange += Time.deltaTime;
-			if (crop.phase == CropPhase.Seed && crop.timeSincePhaseChange > SeedDuration)
+			crop.growSincePhaseChange += Time.deltaTime * crop.growSpeed;
+			if (crop.phase == CropPhase.Seed && crop.growSincePhaseChange > SeedDuration)
 			{
 				SetCropPhase(crop, CropPhase.Growing);
 			}
-			else if (crop.phase == CropPhase.Growing && crop.timeSincePhaseChange > SeedDuration)
+			else if (crop.phase == CropPhase.Growing && crop.growSincePhaseChange > SeedDuration)
 			{
 				SetCropPhase(crop, CropPhase.Flower);
 			}
-			else if (crop.phase == CropPhase.Flower && crop.timeSincePhaseChange > SeedDuration)
+			else if (crop.phase == CropPhase.Flower && crop.growSincePhaseChange > SeedDuration)
 			{
 				SetCropPhase(crop, CropPhase.Ripe);
 			}
-			else if (crop.phase == CropPhase.Ripe && crop.timeSincePhaseChange > SeedDuration)
+			else if (crop.phase == CropPhase.Ripe && crop.growSincePhaseChange > SeedDuration)
 			{
 				SetCropPhase(crop, CropPhase.Dead);
 			}
 		}
 	}
 
-	void SetCropPhase(Crop crop, CropPhase phase)
+	void SetCropPhase(Crop crop, CropPhase phase, bool forceUpdate = false)
 	{
-		if (crop.phase != phase)
+		if (crop.phase != phase || forceUpdate)
 		{
-
-			crop.timeSincePhaseChange = 0;
+			crop.growSincePhaseChange = 0;
+			crop.growSpeed = Mathf.Lerp(minimalGrowSpeed, maximalGrowSpeed, Random.value);
 		}
 		crop.phase = phase;
 		if (crop.phase == CropPhase.Seed)

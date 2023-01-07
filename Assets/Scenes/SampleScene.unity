@@ -657,7 +657,10 @@ MonoBehaviour:
   GrowingDuration: 4
   FlowerDuration: 4
   RipeDuration: 4
-  minimalGenerationInterval: 1
+  minimalGenerationInterval: 0.5
+  maximalGenerationInterval: 1.5
+  minimalGrowSpeed: 0.5
+  maximalGrowSpeed: 1.5
 --- !u!4 &843380255
 Transform:
   m_ObjectHideFlags: 0

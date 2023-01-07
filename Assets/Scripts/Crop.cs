@@ -16,7 +16,8 @@ public class Crop : MonoBehaviour
 	public SpriteRenderer sprite;
 
 	public CropPhase phase = CropPhase.Seed;
-	public float timeSincePhaseChange = 0;
+	public float growSincePhaseChange = 0;
+	public float growSpeed = 1;
 	void Awake()
 	{
 		sprite = GetComponent<SpriteRenderer>();
