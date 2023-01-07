@@ -654,11 +654,11 @@ MonoBehaviour:
   RipeColor: {r: 1, g: 0.63872534, b: 0, a: 1}
   DeadColor: {r: 1, g: 0.85728097, b: 0.7216981, a: 1}
   SeedDuration: 2
-  GrowingDuration: 4
-  FlowerDuration: 4
-  RipeDuration: 4
-  minimalGenerationInterval: 0.5
-  maximalGenerationInterval: 1.5
+  GrowingDuration: 3
+  FlowerDuration: 3
+  RipeDuration: 8
+  minimalGenerationInterval: 0.2
+  maximalGenerationInterval: 0.8
   minimalGrowSpeed: 0.5
   maximalGrowSpeed: 1.5
 --- !u!4 &843380255

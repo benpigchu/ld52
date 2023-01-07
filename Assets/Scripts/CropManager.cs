@@ -62,7 +62,7 @@ public class CropManager : MonoBehaviour
 
 	void GenerateInitialCrop()
 	{
-		for (int i = 0; i < 25; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			TryGenerateCrop();
 		}
@@ -74,6 +74,11 @@ public class CropManager : MonoBehaviour
 		nextGenerationRandom = Random.value;
 		float x = Random.Range(-4f, 4f);
 		float y = Random.Range(-4f, 4f);
+		var castBoxResult = Physics2D.BoxCast(new Vector2(x, y), Vector2.one, 0, Vector2.up, 0);
+		if (castBoxResult.collider != null)
+		{
+			return;
+		}
 		GameObject cropGameObject = Instantiate(cropPrefab, new Vector3(x, y, 0), Quaternion.identity, ground.transform);
 		Crop crop = cropGameObject.GetComponent<Crop>();
 		crops.Add(crop);
@@ -89,15 +94,15 @@ public class CropManager : MonoBehaviour
 			{
 				SetCropPhase(crop, CropPhase.Growing);
 			}
-			else if (crop.phase == CropPhase.Growing && crop.growSincePhaseChange > SeedDuration)
+			else if (crop.phase == CropPhase.Growing && crop.growSincePhaseChange > GrowingDuration)
 			{
 				SetCropPhase(crop, CropPhase.Flower);
 			}
-			else if (crop.phase == CropPhase.Flower && crop.growSincePhaseChange > SeedDuration)
+			else if (crop.phase == CropPhase.Flower && crop.growSincePhaseChange > FlowerDuration)
 			{
 				SetCropPhase(crop, CropPhase.Ripe);
 			}
-			else if (crop.phase == CropPhase.Ripe && crop.growSincePhaseChange > SeedDuration)
+			else if (crop.phase == CropPhase.Ripe && crop.growSincePhaseChange > RipeDuration)
 			{
 				SetCropPhase(crop, CropPhase.Dead);
 			}
@@ -109,7 +114,7 @@ public class CropManager : MonoBehaviour
 		if (crop.phase != phase || forceUpdate)
 		{
 			crop.growSincePhaseChange = 0;
-			crop.growSpeed = Mathf.Lerp(minimalGrowSpeed, maximalGrowSpeed, Random.value);
+			crop.growSpeed = Random.Range(minimalGrowSpeed, maximalGrowSpeed);
 		}
 		crop.phase = phase;
 		if (crop.phase == CropPhase.Seed)

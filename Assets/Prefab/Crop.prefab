@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6238707240339494313}
   - component: {fileID: 646798583875847301}
   - component: {fileID: 5051947082192637284}
+  - component: {fileID: 5936916424669139994}
   m_Layer: 0
   m_Name: Crop
   m_TagString: Untagged
@@ -97,3 +98,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0add1881b92a404489bef19d06eae52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  phase: 0
+  growSincePhaseChange: 0
+  growSpeed: 1
+--- !u!61 &5936916424669139994
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6597953795929502611}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
