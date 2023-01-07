@@ -648,6 +648,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ground: {fileID: 1031255665}
   cropPrefab: {fileID: 6597953795929502611, guid: c38e2dbb2a7dac0459f0cafdf3687d5a, type: 3}
+  harvester: {fileID: 1856577949}
   SeedColor: {r: 0.12434341, g: 0.3584906, b: 0, a: 1}
   GrowingColor: {r: 0.19122767, g: 1, b: 0, a: 1}
   FlowerColor: {r: 0.7362523, g: 1, b: 0, a: 1}

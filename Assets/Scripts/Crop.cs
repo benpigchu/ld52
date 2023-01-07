@@ -35,4 +35,9 @@ public class Crop : MonoBehaviour
 
 	}
 
+    void OnTriggerEnter2D(Collider2D collider){
+        if(collider.attachedRigidbody==CropManager.Instance.harvester.rigidbody){
+            CropManager.Instance.HarvestCrop(this);
+        }
+    }
 }

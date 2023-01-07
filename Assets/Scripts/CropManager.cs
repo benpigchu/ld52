@@ -7,6 +7,7 @@ public class CropManager : MonoBehaviour
 	static public CropManager Instance;
 	public GameObject ground;
 	public GameObject cropPrefab;
+	public Harvester harvester;
 
 	public Color SeedColor;
 	public Color GrowingColor;
@@ -137,5 +138,14 @@ public class CropManager : MonoBehaviour
 		{
 			crop.sprite.color = DeadColor;
 		}
+	}
+
+	public void HarvestCrop(Crop crop)
+	{
+        if(crop.phase==CropPhase.Ripe){
+            Debug.Log("score++!");
+        }
+        crops.Remove(crop);
+		Destroy(crop.gameObject);
 	}
 }

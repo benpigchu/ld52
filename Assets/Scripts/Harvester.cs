@@ -6,7 +6,7 @@ using static Vector2DMath;
 
 public class Harvester : MonoBehaviour
 {
-	new Rigidbody2D rigidbody;
+	public new Rigidbody2D rigidbody;
 
 	public float speed = 1;
 	public float rotationRadius = 1;
