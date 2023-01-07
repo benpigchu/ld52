@@ -8,6 +8,16 @@ public class CropManager : MonoBehaviour
 	public GameObject ground;
 	public GameObject cropPrefab;
 
+	public Color SeedColor;
+	public Color GrowingColor;
+	public Color FlowerColor;
+	public Color RipeColor;
+	public Color DeadColor;
+	public float SeedDuration = 2;
+	public float GrowingDuration = 4;
+	public float FlowerDuration = 4;
+	public float RipeDuration = 4;
+
 	public float minimalGenerationInterval = 1;
 
 	private List<Crop> crops = new List<Crop>();
@@ -39,6 +49,7 @@ public class CropManager : MonoBehaviour
 		{
 			TryGenerateCrop();
 		}
+		UpdateCrops();
 	}
 
 	void GenerateInitialCrop()
@@ -51,11 +62,66 @@ public class CropManager : MonoBehaviour
 
 	void TryGenerateCrop()
 	{
-        timeSinceLastGeneration=0;
+		timeSinceLastGeneration = 0;
 		float x = Random.Range(-4f, 4f);
 		float y = Random.Range(-4f, 4f);
 		GameObject cropGameObject = Instantiate(cropPrefab, new Vector3(x, y, 0), Quaternion.identity, ground.transform);
 		Crop crop = cropGameObject.GetComponent<Crop>();
 		crops.Add(crop);
+		SetCropPhase(crop, CropPhase.Seed);
+	}
+
+	void UpdateCrops()
+	{
+		foreach (var crop in crops)
+		{
+			crop.timeSincePhaseChange += Time.deltaTime;
+			if (crop.phase == CropPhase.Seed && crop.timeSincePhaseChange > SeedDuration)
+			{
+				SetCropPhase(crop, CropPhase.Growing);
+			}
+			else if (crop.phase == CropPhase.Growing && crop.timeSincePhaseChange > SeedDuration)
+			{
+				SetCropPhase(crop, CropPhase.Flower);
+			}
+			else if (crop.phase == CropPhase.Flower && crop.timeSincePhaseChange > SeedDuration)
+			{
+				SetCropPhase(crop, CropPhase.Ripe);
+			}
+			else if (crop.phase == CropPhase.Ripe && crop.timeSincePhaseChange > SeedDuration)
+			{
+				SetCropPhase(crop, CropPhase.Dead);
+			}
+		}
+	}
+
+	void SetCropPhase(Crop crop, CropPhase phase)
+	{
+		if (crop.phase != phase)
+		{
+
+			crop.timeSincePhaseChange = 0;
+		}
+		crop.phase = phase;
+		if (crop.phase == CropPhase.Seed)
+		{
+			crop.sprite.color = SeedColor;
+		}
+		else if (crop.phase == CropPhase.Growing)
+		{
+			crop.sprite.color = GrowingColor;
+		}
+		else if (crop.phase == CropPhase.Flower)
+		{
+			crop.sprite.color = FlowerColor;
+		}
+		else if (crop.phase == CropPhase.Ripe)
+		{
+			crop.sprite.color = RipeColor;
+		}
+		else
+		{
+			crop.sprite.color = DeadColor;
+		}
 	}
 }

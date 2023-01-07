@@ -646,8 +646,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7ee1f10ac774014d8e61d443205bd2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground: {fileID: 1273054789}
+  ground: {fileID: 1031255665}
   cropPrefab: {fileID: 6597953795929502611, guid: c38e2dbb2a7dac0459f0cafdf3687d5a, type: 3}
+  SeedColor: {r: 0.12434341, g: 0.3584906, b: 0, a: 1}
+  GrowingColor: {r: 0.19122767, g: 1, b: 0, a: 0}
+  FlowerColor: {r: 0.7362523, g: 1, b: 0, a: 0}
+  RipeColor: {r: 1, g: 0.63872534, b: 0, a: 0}
+  DeadColor: {r: 1, g: 0.85728097, b: 0.7216981, a: 0}
+  SeedDuration: 2
+  GrowingDuration: 4
+  FlowerDuration: 4
+  RipeDuration: 4
+  minimalGenerationInterval: 1
 --- !u!4 &843380255
 Transform:
   m_ObjectHideFlags: 0
