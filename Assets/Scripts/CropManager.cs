@@ -73,12 +73,23 @@ public class CropManager : MonoBehaviour
 	{
 		timeSinceLastGeneration = 0;
 		nextGenerationRandom = Random.value;
-		float x = Random.Range(-4f, 4f);
-		float y = Random.Range(-4f, 4f);
-		var castBoxResult = Physics2D.BoxCast(new Vector2(x, y), Vector2.one, 0, Vector2.up, 0);
-		if (castBoxResult.collider != null)
+		float x = 0; ;
+		float y = 0; Random.Range(-4f, 4f);
+		int attemptedTime = 0;
+		while (true)
 		{
-			return;
+			x = Random.Range(-4f, 4f);
+			y = Random.Range(-4f, 4f);
+			var castBoxResult = Physics2D.BoxCast(new Vector2(x, y), Vector2.one, 0, Vector2.up, 0);
+			if (castBoxResult.collider == null)
+			{
+				break;
+			}
+			attemptedTime++;
+			if (attemptedTime >= 5)
+			{
+				return;
+			}
 		}
 		GameObject cropGameObject = Instantiate(cropPrefab, new Vector3(x, y, 0), Quaternion.identity, ground.transform);
 		Crop crop = cropGameObject.GetComponent<Crop>();
@@ -142,10 +153,11 @@ public class CropManager : MonoBehaviour
 
 	public void HarvestCrop(Crop crop)
 	{
-        if(crop.phase==CropPhase.Ripe){
-            Debug.Log("score++!");
-        }
-        crops.Remove(crop);
+		if (crop.phase == CropPhase.Ripe)
+		{
+			Debug.Log("score++!");
+		}
+		crops.Remove(crop);
 		Destroy(crop.gameObject);
 	}
 }
