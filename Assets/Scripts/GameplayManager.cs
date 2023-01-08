@@ -20,6 +20,7 @@ public class GameplayManager : MonoBehaviour
 
 	public TextMeshProUGUI timerText;
 	public TextMeshProUGUI scoreText;
+	public TextMeshProUGUI resultText;
 
 	public GameObject PlayingUILayer;
 	public GameObject ResultUILayer;
@@ -30,6 +31,8 @@ public class GameplayManager : MonoBehaviour
 	public GameView currentView = GameView.Title;
 	private int score;
 	private float timeRemain;
+
+	private string resultTemplate;
 	void Awake()
 	{
 		if (Instance == null)
@@ -41,6 +44,7 @@ public class GameplayManager : MonoBehaviour
 			Destroy(gameObject);
 		}
 		timeRemain = timeLimit;
+		resultTemplate = resultText.text;
 	}
 
 	// Start is called before the first frame update
@@ -59,6 +63,7 @@ public class GameplayManager : MonoBehaviour
 			timerText.text = $"{timeRemainSeconds / 60}:{timeRemainSeconds % 60:D2}";
 			if (timeRemain < 0)
 			{
+                resultText.text=string.Format(resultTemplate,score);
 				SetGameView(GameView.Result);
 			}
 		}
