@@ -46,12 +46,15 @@ public class CropManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		GenerateInitialCrop();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		if (GameplayManager.Instance.currentView != GameView.Playing)
+		{
+			return;
+		}
 		timeSinceLastGeneration += Time.deltaTime;
 		float generationPossibility = Mathf.InverseLerp(minimalGenerationInterval, maximalGenerationInterval, timeSinceLastGeneration);
 		if (generationPossibility > nextGenerationRandom)
@@ -159,5 +162,16 @@ public class CropManager : MonoBehaviour
 		}
 		crops.Remove(crop);
 		Destroy(crop.gameObject);
+	}
+
+	internal void Reset()
+	{
+		foreach (var crop in crops)
+		{
+			Destroy(crop.gameObject);
+		}
+		GenerateInitialCrop();
+		crops.Clear();
+		harvester.Reset();
 	}
 }

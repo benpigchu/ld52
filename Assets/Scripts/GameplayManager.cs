@@ -1,20 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using TMPro;
 using System;
+
+public enum GameView
+{
+	Title,
+	Playing,
+	Result,
+}
 
 public class GameplayManager : MonoBehaviour
 {
 	static public GameplayManager Instance;
 
-    public float timeLimit=120;
+	public float timeLimit = 120;
 
-    public TextMeshProUGUI timerText;
-    public TextMeshProUGUI scoreText;
-    private int score;
-    private float timeRemain;
-    void Awake()
+	public TextMeshProUGUI timerText;
+	public TextMeshProUGUI scoreText;
+
+	public GameObject PlayingUILayer;
+	public GameObject ResultUILayer;
+	public GameObject TitleUILayer;
+	public GameObject Playfield;
+
+	public GameView initialView = GameView.Title;
+	public GameView currentView = GameView.Title;
+	private int score;
+	private float timeRemain;
+	void Awake()
 	{
 		if (Instance == null)
 		{
@@ -24,25 +40,53 @@ public class GameplayManager : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
-        timeRemain=timeLimit;
+		timeRemain = timeLimit;
 	}
 
-    // Start is called before the first frame update
-    void Start()
-    {
+	// Start is called before the first frame update
+	void Start()
+	{
+		SetGameView(initialView);
+	}
 
-    }
+	// Update is called once per frame
+	void Update()
+	{
+		if (currentView == GameView.Playing)
+		{
+			timeRemain -= Time.deltaTime;
+			int timeRemainSeconds = Math.Max(0, Mathf.CeilToInt(timeRemain));
+			timerText.text = $"{timeRemainSeconds / 60}:{timeRemainSeconds % 60:D2}";
+			if (timeRemain < 0)
+			{
+				SetGameView(GameView.Result);
+			}
+		}
+		else
+		{
+			if (Keyboard.current.spaceKey.IsPressed())
+			{
+				timeRemain = timeLimit;
+				score = 0;
+				scoreText.text = $"{score}";
+				SetGameView(GameView.Playing);
+				CropManager.Instance.Reset();
+			}
+		}
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        timeRemain-=Time.deltaTime;
-        int timeRemainSeconds=Math.Max(0,Mathf.CeilToInt(timeRemain));
-        timerText.text=$"{timeRemainSeconds/60}:{timeRemainSeconds%60:D2}";
-    }
+	void SetGameView(GameView view)
+	{
+		currentView = view;
+		PlayingUILayer.SetActive(view == GameView.Playing);
+		ResultUILayer.SetActive(view == GameView.Result);
+		TitleUILayer.SetActive(view == GameView.Title);
+		Playfield.SetActive(view != GameView.Title);
+	}
 
-    public void AddScore(int value){
-        score+=value;
-        scoreText.text=$"{score}";
-    }
+	public void AddScore(int value)
+	{
+		score += value;
+		scoreText.text = $"{score}";
+	}
 }
