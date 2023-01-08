@@ -155,7 +155,7 @@ public class CropManager : MonoBehaviour
 	{
 		if (crop.phase == CropPhase.Ripe)
 		{
-			Debug.Log("score++!");
+			GameplayManager.Instance.AddScore(1);
 		}
 		crops.Remove(crop);
 		Destroy(crop.gameObject);
