@@ -59,3 +59,5 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 # above comes from https://github.com/github/gitignore/blob/master/Unity.gitignore
+
+*.zip
