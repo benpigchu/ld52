@@ -14,6 +14,11 @@ public class CropManager : MonoBehaviour
 	public Color FlowerColor;
 	public Color RipeColor;
 	public Color DeadColor;
+	public Sprite SeedSprite;
+	public Sprite GrowingSprite;
+	public Sprite FlowerSprite;
+	public Sprite RipeSprite;
+	public Sprite DeadSprite;
 	public float SeedDuration = 2;
 	public float GrowingDuration = 4;
 	public float FlowerDuration = 4;
@@ -134,23 +139,23 @@ public class CropManager : MonoBehaviour
 		crop.phase = phase;
 		if (crop.phase == CropPhase.Seed)
 		{
-			crop.sprite.color = SeedColor;
+			crop.sprite.sprite = SeedSprite;
 		}
 		else if (crop.phase == CropPhase.Growing)
 		{
-			crop.sprite.color = GrowingColor;
+			crop.sprite.sprite = GrowingSprite;
 		}
 		else if (crop.phase == CropPhase.Flower)
 		{
-			crop.sprite.color = FlowerColor;
+			crop.sprite.sprite = FlowerSprite;
 		}
 		else if (crop.phase == CropPhase.Ripe)
 		{
-			crop.sprite.color = RipeColor;
+			crop.sprite.sprite = RipeSprite;
 		}
 		else
 		{
-			crop.sprite.color = DeadColor;
+			crop.sprite.sprite = DeadSprite;
 		}
 	}
 
