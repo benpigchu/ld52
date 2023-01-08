@@ -19,6 +19,9 @@ public class CropManager : MonoBehaviour
 	public Sprite FlowerSprite;
 	public Sprite RipeSprite;
 	public Sprite DeadSprite;
+
+    public AudioClip HarvestSound;
+    public AudioClip DestroySound;
 	public float SeedDuration = 2;
 	public float GrowingDuration = 4;
 	public float FlowerDuration = 4;
@@ -164,7 +167,10 @@ public class CropManager : MonoBehaviour
 		if (crop.phase == CropPhase.Ripe)
 		{
 			GameplayManager.Instance.AddScore(1);
-		}
+            AudioSource.PlayClipAtPoint(HarvestSound,Vector3.zero);
+		}else{
+            AudioSource.PlayClipAtPoint(DestroySound,Vector3.zero);
+        }
 		crops.Remove(crop);
 		Destroy(crop.gameObject);
 	}

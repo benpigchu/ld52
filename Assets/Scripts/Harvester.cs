@@ -8,6 +8,7 @@ using static Vector2DMath;
 public class Harvester : MonoBehaviour
 {
 	public new Rigidbody2D rigidbody;
+	public AudioSource audioSource;
 
 	public float speed = 1;
 	public float rotationRadius = 1;
@@ -22,6 +23,7 @@ public class Harvester : MonoBehaviour
 		rigidbody = GetComponent<Rigidbody2D>();
 		initPosition = rigidbody.position;
 		initRotation = rigidbody.rotation;
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	// Start is called before the first frame update
@@ -35,6 +37,7 @@ public class Harvester : MonoBehaviour
 	{
 		rigidbody.position = initPosition;
 		rigidbody.rotation = initRotation;
+		UpdateSfxPlaying(false);
 	}
 	// Update is called once per frame
 	void Update()
@@ -43,6 +46,7 @@ public class Harvester : MonoBehaviour
 		{
 			rigidbody.velocity = Vector2.zero;
 			rigidbody.angularVelocity = 0;
+			UpdateSfxPlaying(false);
 			return;
 		}
 
@@ -67,17 +71,31 @@ public class Harvester : MonoBehaviour
 		{
 			rigidbody.velocity = direction * speed;
 			rigidbody.angularVelocity = turnDirection * Mathf.Rad2Deg * speed / rotationRadius;
+			UpdateSfxPlaying(true);
 		}
 		else if (Keyboard.current.downArrowKey.IsPressed())
 		{
 			rigidbody.velocity = -direction * speed;
 			rigidbody.angularVelocity = -turnDirection * Mathf.Rad2Deg * speed / rotationRadius;
+			UpdateSfxPlaying(true);
 		}
 		else
 		{
 			rigidbody.velocity = Vector2.zero;
 			rigidbody.angularVelocity = 0;
+			UpdateSfxPlaying(false);
 		}
+	}
 
+	void UpdateSfxPlaying(bool playing)
+	{
+		if (playing && !audioSource.isPlaying)
+		{
+			audioSource.Play();
+		}
+		if (!playing && audioSource.isPlaying)
+		{
+			audioSource.Pause();
+		}
 	}
 }
